@@ -1,0 +1,36 @@
+{% extends 'bookings/base.html' %}
+{% block title %}Book Seats for {{ movie.title }}{% endblock %}
+{% block content %}
+<h2>Seat Selection for {{ movie.title }}</h2>
+{% for row, seats in rows.items %}
+    <div class="mb-3">
+        <h5>Row {{ row }}</h5>
+        {% for seat in seats %}
+            {% if seat.is_booked %}
+                <button class="btn btn-sm btn-danger m-1" disabled>{{ seat.seat_number }}</button>
+            {% else %}
+                <button class="btn btn-sm btn-success m-1 book-seat" data-seat-id="{{ seat.id }}">{{ seat.seat_number }}</button>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.book-seat').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const seatId = btn.getAttribute('data-seat-id');
+            fetch('/bookings/api/seats/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({movie: {{ movie.id }}, seat: seatId})
+            }).then(r => r.json()).then(data => {
+                console.log(data);
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-danger');
+                btn.disabled = true;
+            });
+        });
+    });
+});
+</script>{% endblock %}

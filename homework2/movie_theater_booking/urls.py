@@ -19,5 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path("bookings/", include("bookings.urls")),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('api-auth/', include('rest_framework.urls')),  # login for browsable API
     path('admin/', admin.site.urls),
 ]
