@@ -5,8 +5,8 @@ services:
     region: oregon
     plan: free
     branch: main
-    buildCommand: ./build.sh
-    startCommand: gunicorn movie_theater_booking.wsgi
+        buildCommand: cd cs4300/homework2 && bash build.sh
+    startCommand: cd cs4300/homework2 && gunicorn movie_theater_booking.wsgi
     autoDeploy: true
     
     envVars:
