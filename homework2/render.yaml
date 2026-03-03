@@ -12,10 +12,10 @@ services:
     envVars:
       - key: SECRET_KEY
         value: ""
-        sync: false
+       
       - key: DEBUG
         value: "False"
-        sync: false
+        
       - key: DATABASE_URL
         value: ""
-        sync: false
+        
